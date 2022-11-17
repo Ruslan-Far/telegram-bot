@@ -2,8 +2,8 @@ import json
 
 import rstr
 
-# with open('my_intent_catcher_data/train.json', encoding="utf-8") as f:
-with open('supporting_train.json', encoding="utf-8") as f:
+with open('my_intent_catcher_data/train.json', encoding="utf-8") as f:
+# with open('supporting_train.json', encoding="utf-8") as f:
     templates = json.load(f)
 
 for section, commands in templates.items():
