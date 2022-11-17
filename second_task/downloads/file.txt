@@ -1,0 +1,5 @@
+https://habr.com/ru/post/442800/
+https://otus.ru/journal/bot-v-telegram-na-pitone-ot-a-do-ya/
+https://xakep.ru/2021/11/28/python-telegram-bots/
+https://sky.pro/media/telegram-bot-na-python/
+https://skillbox.ru/media/code/chatboty-v-telegram-na-python-chast-1/

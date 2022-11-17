@@ -34,6 +34,10 @@ def get_first_message(message):
     bot.register_next_step_handler(message, get_url_message)
 
 
+def get_links():
+    return open("downloads/file.txt", encoding="utf-8").read()
+
+
 def get_url_message(message):
     global context
     print("Ссылка:", message.text)
@@ -62,7 +66,7 @@ def get_text_message(message):
     elif intent_result[0] == 'cqa':
         get_answer_message(message)
     elif intent_result[0] == 'search':
-        bot.reply_to(message, "Выполнен поиск статей о написании ботов")
+        bot.reply_to(message, "Выполнен поиск статей о написании ботов\n" + get_links())
     else:
         bot.reply_to(message, "Я не понимаю, что Вы от меня хотите:(")
 
