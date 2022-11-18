@@ -9,8 +9,6 @@ cqa_model_config = read_json('../squad_ru_bert_infer.json')
 cqa_model = build_model(cqa_model_config, download=True)
 
 intent_catcher_model_config = read_json('../intent_catcher.json')
-# intent_catcher_model = build_model(intent_catcher_model_config)
-# intent_catcher_model = train_model(intent_catcher_model_config, download=True)
 
 bot = telebot.TeleBot('5724405385:AAEiLzNDaJYzRkFC03Pszlfsv7gewWhYLh4')
 min_limit = 500
@@ -56,8 +54,8 @@ def get_answer_message(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_message(message):
-    intent_catcher_model = build_model(intent_catcher_model_config)
-    # intent_catcher_model = train_model(intent_catcher_model_config)
+    # intent_catcher_model = build_model(intent_catcher_model_config)
+    intent_catcher_model = train_model(intent_catcher_model_config)
     intent_result = intent_catcher_model([message.text])
     print("Сообщение:", message.text)
     print("Интент:", intent_result[0])
