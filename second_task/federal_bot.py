@@ -1,3 +1,5 @@
+import multiprocessing
+from multiprocessing import Process
 import telebot
 import time
 import requests
@@ -54,9 +56,8 @@ def get_answer_message(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_message(message):
-    # intent_catcher_model = build_model(intent_catcher_model_config)
-    intent_catcher_model = train_model(intent_catcher_model_config)
-    intent_result = intent_catcher_model([message.text])
+    queue.put(message.text)
+    intent_result = queue.get()
     print("Сообщение:", message.text)
     print("Интент:", intent_result[0])
     if intent_result[0] == 'start':
@@ -69,10 +70,23 @@ def get_text_message(message):
         bot.reply_to(message, "Я не понимаю, что Вы от меня хотите:(")
 
 
-print('bot listening')
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception as e:
-        print(e)
-        time.sleep(15)
+def work_with_intent_catcher_model(q):
+    intent_catcher_model = build_model(intent_catcher_model_config)
+    # intent_catcher_model = train_model(intent_catcher_model_config)
+    q.put(1)
+    while True:
+        q.put(intent_catcher_model([q.get()]))
+
+
+if __name__ == '__main__':
+    queue = multiprocessing.Queue()
+    child_process = Process(target=work_with_intent_catcher_model, args=(queue,))
+    child_process.start()
+    queue.get()
+    print('bot listening')
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except Exception as e:
+            print(e)
+            time.sleep(15)
