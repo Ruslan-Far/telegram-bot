@@ -71,8 +71,8 @@ def get_text_message(message):
 
 
 def work_with_intent_catcher_model(q):
-    intent_catcher_model = build_model(intent_catcher_model_config)
-    # intent_catcher_model = train_model(intent_catcher_model_config)
+    # intent_catcher_model = build_model(intent_catcher_model_config)
+    intent_catcher_model = train_model(intent_catcher_model_config)
     q.put(1)
     while True:
         q.put(intent_catcher_model([q.get()]))
